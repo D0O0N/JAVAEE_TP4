@@ -17,7 +17,7 @@ import static org.junit.Assert.*;
  * @author pedago
  */
 public class Test_Multiplayer {
-    public MultiPlayerGame game;
+    public Multiplayer game;
     public String[] players = { "John", "Paul", "Georges", "Ringo" };
     public Test_Multiplayer() {
     }
@@ -45,8 +45,33 @@ public class Test_Multiplayer {
     @Test
     public void Test1() throws Exception {
         
-        assertEquals(game.startNewGame(players),"Prochain tir : joueur John, tour n° 1, boule n° 1");
-                
-                
+        assertEquals("Premier ","Prochain tir : joueur John, tour n° 1, boule n° 1",game.startNewGame(players));
+        assertEquals("Prochain tir : joueur Paul, tour n° 1, boule n° 1",game.lancer(10));
+        assertEquals("Prochain tir : joueur Paul, tour n° 1, boule n° 2",game.lancer(3));
+        assertEquals("Prochain tir : joueur Georges, tour n° 1, boule n° 1",game.lancer(7));
+        assertEquals("Prochain tir : joueur Georges, tour n° 1, boule n° 2",game.lancer(0));
+        assertEquals("Prochain tir : joueur Ringo, tour n° 1, boule n° 1",game.lancer(0));
+        assertEquals("Prochain tir : joueur Ringo, tour n° 1, boule n° 2",game.lancer(0));
+        assertEquals("Prochain tir : joueur John, tour n° 2, boule n° 1",game.lancer(0));
+        assertEquals("Prochain tir : joueur John, tour n° 2, boule n° 2",game.lancer(6));
+        assertEquals("Prochain tir : joueur Paul, tour n° 2, boule n° 1",game.lancer(3));
+        assertEquals("Prochain tir : joueur Paul, tour n° 2, boule n° 2",game.lancer(5));
+        assertEquals("Prochain tir : joueur Georges, tour n° 2, boule n° 1",game.lancer(0));
+        int[] ScoreTest = {28,20,0,0};
+        for (int i = 0; i<ScoreTest.length;i++){
+            assertEquals(ScoreTest[i], game.joueurs.get(i).score());
+        }      
+    }
+    @Test
+    public void TestPerfectGame() throws Exception {
+        
+        assertEquals("Premier ","Prochain tir : joueur John, tour n° 1, boule n° 1",game.startNewGame(players));
+        for (int i = 0; i < 12 * 4; i++) {
+            System.out.println(game.lancer(10));
+        }
+        int[] ScoreTest = {300,300,300,300};
+        for (int i = 0; i<ScoreTest.length;i++){
+            assertEquals(ScoreTest[i], game.joueurs.get(i).score());
+        }  
     }
 }

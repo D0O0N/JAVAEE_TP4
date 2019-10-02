@@ -14,20 +14,12 @@ import java.util.ArrayList;
  */
 
 public class Multiplayer implements MultiPlayerGame {
-    ArrayList<Player> joueurs = new ArrayList<Player>();
-    Integer jActuel = 0;
+    public ArrayList<Player> joueurs = new ArrayList<Player>();
+    public Integer jActuel = 0;
     
     public Multiplayer(){
         
         
-    }
-    
-    public void lancer(Integer q){
-        Player J = joueurs.get(jActuel);
-        J.lancer(q);
-        if (J.hasCompletedFrame()){
-            jActuel += 1;
-        }
     }
 
     @Override
@@ -42,12 +34,32 @@ public class Multiplayer implements MultiPlayerGame {
 
     @Override
     public String lancer(int nombreDeQuillesAbattues) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Player J = joueurs.get(jActuel % joueurs.size());
+        Player Js = new Player("");
+        Integer q = nombreDeQuillesAbattues;
+        J.lancer(q);
+        if(isFinished()){
+            return "Partie Terminée";
+        }
+        if (J.isFinished() || J.hasCompletedFrame()){
+            jActuel += 1;
+        }
+        Js = joueurs.get(jActuel % joueurs.size());
+        return Js.infos();
     }
 
     @Override
     public int scoreFor(String playerName) throws Exception {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    public boolean isFinished(){
+        for(Player p : joueurs){
+            if (!p.isFinished()){
+                return false;
+            }
+        }
+        return true;
     }
     
 }
